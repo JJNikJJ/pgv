@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Перевод сообщения - PolyGlotVoice</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            padding-top: 70px; /* Отступ сверху для фиксированной навигационной панели */
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-custom {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .audio-output {
+            margin-top: 20px;
+        }
+        .message-section {
+            margin-top: 20px;
+        }
+        .message-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .message-item div {
+            flex: 1;
+        }
+        .message-item .message-date {
+            font-weight: bold;
+        }
+        .message-item .message-actions {
+            text-align: right;
+        }
+        .message-item .message-actions a {
+            margin-right: 10px;
+        }
+        .message-item .message-actions audio {
+            max-width: 200px;
+        }
+        /* Стили для боковой панели */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #000;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidenav a:hover {
+            background-color: #ddd;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">PolyGlotVoice</a>
+    <button class="navbar-toggler" type="button" onclick="openNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<!-- Боковая панель -->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="{{ url_for('read_record') }}">Запись</a>
+    <a href="{{ url_for('read_translate') }}">Перевод</a>
+    <a href="{{ url_for('read_about') }}">О нас</a>
+    <a href="{{ url_for('read_profile') }}">Профиль</a>
+    <a href="{{ url_for('logout') }}">Выйти</a>
+</div>
+
+<div class="content-container">
+    <div class="form-container">
+        <h2>Добро пожаловать, {{ user.nickname }}!</h2>
+        <h3>Перевод сообщений</h3>
+
+        <div class="message-section">
+            <h3>Непереведенные голосовые сообщения</h3>
+            <ul>
+                {% for message in untranslated_messages %}
+                    <li class="message-item">
+                        <div class="message-date"><strong>Дата:</strong> {{ message.created_at }}</div>
+                        <div class="message-actions">
+                            <audio controls><source src="{{ message.content }}" type="audio/mpeg">Ваш браузер не поддерживает элемент audio.</audio>
+                            <form class="translateForm">
+                                <input type="hidden" name="message_id" value="{{ message.id }}">
+                                <select name="target_language" class="form-control">
+                                    <option value="en">Английский</option>
+                                    <option value="ru">Русский</option>
+                                    <option value="de">Немецкий</option>
+                                    <option value="fr">Французский</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-custom">Показать перевод</button>
+                            </form>
+                            <div class="translated-text mt-2"></div>
+                            <div class="translated-audio mt-2"></div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="message-section">
+            <h3>Переведенные голосовые сообщения</h3>
+            <ul>
+                {% for message in translated_messages %}
+                    <li class="message-item">
+                        <div class="message-date"><strong>Дата:</strong> {{ message.created_at }}</div>
+                        <div class="message-actions">
+                            <audio controls><source src="{{ message.content }}" type="audio/mpeg">Ваш браузер не поддерживает элемент audio.</audio>
+                            <a href="{{ message.content }}" download>Скачать</a>
+                            <button class="btn btn-danger btn-sm delete-button" data-message-id="{{ message.id }}">Удалить</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker зарегистрирован с областью:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Регистрация Service Worker завершилась ошибкой:', error);
+            });
+    }
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+    // Translate message functionality
+    document.querySelectorAll('.translateForm').forEach(form => {
+        form.onsubmit = async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const response = await fetch('/translate_message', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('Message translated successfully');
+                form.querySelector('.translated-text').innerText = `Перевод: ${data.translated_text}`;
+                const audioElement = document.createElement('audio');
+                audioElement.controls = true;
+                audioElement.src = `/${data.audio_file}`;
+                form.querySelector('.translated-audio').appendChild(audioElement);
+            } else {
+                alert('Failed to translate message');
+            }
+        };
+    });
+
+    // Delete message functionality
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = this.getAttribute('data-message-id');
+            fetch(`/delete_message/${messageId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    this.closest('.message-item').remove();
+                } else {
+                    alert('Ошибка при удалении сообщения');
+                }
+            }).catch(error => {
+                console.error('Error deleting message:', error);
+                alert('Error deleting message');
+            });
+        });
+    });
+</script>
+</body>
+</html>

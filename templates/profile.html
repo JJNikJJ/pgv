@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Профиль - PolyGlotVoice</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007bff">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -68,19 +70,20 @@
 <!-- Боковая панель -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="record.html">Запись</a>
-    <a href="about.html">О нас</a>
-    <a href="profile.html">Профиль</a>
-    <a href="#">Выйти</a>
+    <a href="{{ url_for('read_record') }}">Запись</a>
+    <a href="{{ url_for('read_translate') }}">Перевод</a>
+    <a href="{{ url_for('read_about') }}">О нас</a>
+    <a href="{{ url_for('read_profile') }}">Профиль</a>
+    <a href="{{ url_for('logout') }}">Выйти</a>
 </div>
 
 <div class="content-container">
     <div class="profile-container">
         <h2>Профиль</h2>
-        <div class="profile-item"><strong>Никнейм:</strong> IvanTheGreat</div>
-        <div class="profile-item"><strong>Имя:</strong> Иван</div>
-        <div class="profile-item"><strong>Фамилия:</strong> Иванов</div>
-        <div class="profile-item"><strong>Почта:</strong> ivan@example.com</div>
+        <div class="profile-item"><strong>Никнейм:</strong> {{ user.nickname }}</div>
+        <div class="profile-item"><strong>Имя:</strong> {{ user.first_name }}</div>
+        <div class="profile-item"><strong>Фамилия:</strong> {{ user.last_name }}</div>
+        <div class="profile-item"><strong>Почта:</strong> {{ user.email }}</div>
     </div>
 </div>
 
@@ -88,6 +91,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker зарегистрирован с областью:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Регистрация Service Worker завершилась ошибкой:', error);
+            });
+    }
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
     }

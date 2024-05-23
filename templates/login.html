@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Вход - PolyGlotVoice</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007bff">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f0f8ff;
+            padding-top: 70px;
             text-align: center;
-            padding-top: 50px;
         }
         .form-container {
             background: white;
@@ -29,12 +31,18 @@
 <div class="container">
     <div class="form-container">
         <h2>Вход</h2>
-        <form onsubmit="handleSubmit(event)">
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+        <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+        <form method="post" action="{{ url_for('handle_login') }}">
             <div class="form-group">
-                <input type="tel" class="form-control" id="phone" placeholder="Телефон" required>
+                <input type="tel" class="form-control" name="phone" placeholder="Телефон" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="Пароль" required>
+                <input type="password" class="form-control" name="password" placeholder="Пароль" required>
             </div>
             <div class="form-group text-right">
                 <a href="#">Забыли пароль?</a>
@@ -42,19 +50,23 @@
             <button type="submit" class="btn btn-primary btn-custom">Вход</button>
         </form>
         <div class="form-group text-right">
-            <span>Нет аккаунта? <a href="register.html">Зарегистрироваться</a></span>
+            <span>Нет аккаунта? <a href="{{ url_for('read_register') }}">Зарегистрироваться</a></span>
         </div>
     </div>
 </div>
-
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker зарегистрирован с областью:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Регистрация Service Worker завершилась ошибкой:', error);
+            });
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    function handleSubmit(event) {
-        event.preventDefault();
-        window.location.href = 'record.html';
-    }
-</script>
 </body>
 </html>
