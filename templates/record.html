@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Запись сообщения - PolyGlotVoice</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            padding-top: 70px; /* Отступ сверху для фиксированной навигационной панели */
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-custom {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .audio-output {
+            margin-top: 20px;
+        }
+        /* Стили для боковой панели */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #000;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidenav a:hover {
+            background-color: #ddd;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">PolyGlotVoice</a>
+    <button class="navbar-toggler" type="button" onclick="openNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<!-- Боковая панель -->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="record.html">Запись</a>
+    <a href="about.html">О нас</a>
+    <a href="profile.html">Профиль</a>
+    <a href="#">Выйти</a>
+</div>
+
+<div class="content-container">
+    <div class="form-container">
+        <h2>Запись сообщения</h2>
+        <form>
+            <div class="form-group">
+                <label for="actionSelect">Выберите действие:</label>
+                <select class="form-control" id="actionSelect">
+                    <option value="voice">Записать голосовое сообщение</option>
+                    <option value="text">Ввести текст</option>
+                </select>
+            </div>
+            <div class="form-group" id="voiceInput">
+                <button type="button" class="btn btn-primary btn-custom">Записать голос</button>
+            </div>
+            <div class="form-group" id="textInput" style="display: none;">
+                <textarea class="form-control" id="textMessage" rows="4" placeholder="Введите ваше сообщение"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inputLanguageSelect">Выберите язык ввода:</label>
+                <select class="form-control" id="inputLanguageSelect">
+                    <option value="ru">Русский</option>
+                    <option value="en">Английский</option>
+                    <option value="es">Испанский</option>
+                    <option value="fr">Французский</option>
+                    <!-- Добавьте другие языки по мере необходимости -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="outputLanguageSelect">Выберите язык перевода:</label>
+                <select class="form-control" id="outputLanguageSelect">
+                    <option value="ru">Русский</option>
+                    <option value="en">Английский</option>
+                    <option value="es">Испанский</option>
+                    <option value="fr">Французский</option>
+                    <!-- Добавьте другие языки по мере необходимости -->
+                </select>
+            </div>
+            <button type="button" class="btn btn-success btn-custom">Синтезировать</button>
+        </form>
+        <div class="audio-output">
+            <h3>Переведенное сообщение:</h3>
+            <audio controls>
+                <source src="translated_message.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает элемент audio.
+            </audio>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('actionSelect').addEventListener('change', function() {
+        var voiceInput = document.getElementById('voiceInput');
+        var textInput = document.getElementById('textInput');
+        if (this.value === 'voice') {
+            voiceInput.style.display = 'block';
+            textInput.style.display = 'none';
+        } else {
+            voiceInput.style.display = 'none';
+            textInput.style.display = 'block';
+        }
+    });
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+</body>
+</html>

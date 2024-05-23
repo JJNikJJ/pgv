@@ -1,0 +1,24 @@
+body {
+    background-color: white;
+    text-align: center;
+    padding-top: 50px;
+}
+.robot-img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+.app-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+.tagline {
+    font-size: 18px;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+.btn-custom {
+    width: 200px;
+    margin: 10px auto;
+}
