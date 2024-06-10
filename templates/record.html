@@ -282,20 +282,20 @@
     let audioContext;
     let recorder;
 
-    document.getElementById('startRecording').addEventListener('click', function() {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const input = audioContext.createMediaStreamSource(stream);
-                recorder = new Recorder(input, { numChannels: 1 });
-                recorder.record();
-                document.getElementById('startRecording').disabled = true;
-                document.getElementById('stopRecording').disabled = false;
-                document.getElementById('audioAnimation').style.display = 'flex';
-            }).catch(error => {
-                console.error('Error accessing media devices.', error);
-                alert('Error accessing media devices.');
-            });
+    document.getElementById('startRecording').addEventListener('click', async function() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const input = audioContext.createMediaStreamSource(stream);
+            recorder = new Recorder(input, { numChannels: 1 });
+            recorder.record();
+            document.getElementById('startRecording').disabled = true;
+            document.getElementById('stopRecording').disabled = false;
+            document.getElementById('audioAnimation').style.display = 'flex';
+        } catch (error) {
+            console.error('Error accessing media devices.', error);
+            alert('Error accessing media devices.');
+        }
     });
 
     document.getElementById('stopRecording').addEventListener('click', function() {
@@ -304,48 +304,48 @@
         document.getElementById('stopRecording').disabled = true;
         document.getElementById('audioAnimation').style.display = 'none';
 
-        recorder.exportWAV(blob => {
+        recorder.exportWAV(async function(blob) {
             const formData = new FormData();
             formData.append('file', blob, 'voice_message.wav');
             formData.append('language', document.getElementById('languageSelect').value);
 
-            fetch('/save_voice_message', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
+            try {
+                const response = await fetch('/save_voice_message', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
                 console.log('Voice message saved:', data);
                 if (data.error) {
                     alert(data.error);
                 } else {
                     window.location.reload();  // Reload the page to update the message list
                 }
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error saving voice message:', error);
                 alert('Error saving voice message');
-            });
+            }
         });
     });
 
     // Delete message functionality
     document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', async function() {
             const messageId = this.getAttribute('data-message-id');
-            fetch(`/delete_message/${messageId}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(data => {
+            try {
+                const response = await fetch(`/delete_message/${messageId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
                 if (data.message) {
                     this.closest('.message-item').remove();
                 } else {
                     alert('Ошибка при удалении сообщения');
                 }
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error deleting message:', error);
                 alert('Error deleting message');
-            });
+            }
         });
     });
 </script>
