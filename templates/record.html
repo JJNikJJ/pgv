@@ -229,7 +229,7 @@
                 </select>
                 <button type="button" class="btn btn-primary btn-custom" id="startRecording"><i class="fas fa-microphone"></i> Записать голос</button>
                 <button type="button" class="btn btn-secondary btn-custom" id="stopRecording" disabled><i class="fas fa-stop-circle"></i> Остановить запись</button>
-                <div class="audio-animation" id="audioAnimation" style="display: none;">
+                <div class="audio-animation" id="audioAnimation">
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -270,6 +270,7 @@
                 console.log('Регистрация Service Worker завершилась ошибкой:', error);
             });
     }
+
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
     }
@@ -280,7 +281,6 @@
 
     let audioContext;
     let recorder;
-    let audioChunks = [];
 
     document.getElementById('startRecording').addEventListener('click', function() {
         navigator.mediaDevices.getUserMedia({ audio: true })
