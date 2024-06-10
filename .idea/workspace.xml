@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8237f80c-9a28-464b-a899-14a0a1a31f87" name="Changes" comment="change main and index" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FastAPI main" />
+        <option value="FastAPI test_main" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JJNikJJ&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="195d0517-be09-4228-b3b8-3715b48d0bcf" />
+        <option name="url" value="https://github.com/JJNikJJ/pgv.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2gmepZbZQWMbmGB65tHIl1zRnK9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/ALFA/Desktop/PetProject/pgv",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static\css" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\templates" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static\voice_messages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static\img" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static\icons" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\static" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv\templates" />
+      <recent name="C:\Users\ALFA\Desktop\PetProject\pgv" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d68999036c7f-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.14475.56" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8237f80c-9a28-464b-a899-14a0a1a31f87" name="Changes" comment="" />
+      <created>1716307363846</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716307363846</updated>
+      <workItem from="1716307374129" duration="11758000" />
+      <workItem from="1716366768430" duration="8391000" />
+      <workItem from="1716450680567" duration="7152000" />
+      <workItem from="1716473622751" duration="21202000" />
+      <workItem from="1716529515854" duration="607000" />
+      <workItem from="1716706425050" duration="1342000" />
+      <workItem from="1716760627326" duration="598000" />
+      <workItem from="1716792069231" duration="3000" />
+      <workItem from="1716792861206" duration="60000" />
+      <workItem from="1716933410854" duration="6756000" />
+      <workItem from="1717000421346" duration="3858000" />
+      <workItem from="1717076122377" duration="312000" />
+      <workItem from="1717287141144" duration="529000" />
+      <workItem from="1717337013162" duration="3960000" />
+      <workItem from="1717362569390" duration="22000" />
+      <workItem from="1717363953784" duration="37000" />
+      <workItem from="1717372131810" duration="11000" />
+      <workItem from="1717372259107" duration="1885000" />
+      <workItem from="1717414654888" duration="821000" />
+      <workItem from="1717534710986" duration="2581000" />
+      <workItem from="1717680115557" duration="46000" />
+      <workItem from="1717688618066" duration="740000" />
+      <workItem from="1718009270287" duration="10240000" />
+    </task>
+    <task id="LOCAL-00001" summary="change main and index">
+      <option name="closed" value="true" />
+      <created>1718047782827</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1718047782827</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="change main and index" />
+    <option name="LAST_COMMIT_MESSAGE" value="change main and index" />
+  </component>
+</project>
