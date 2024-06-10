@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Запись сообщения - PolyGlotVoice</title>
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://code.jquery.com https://stackpath.bootstrapcdn.com; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://cdnjs.cloudflare.com;">
+    <title>Загрузка аудио сообщения - PolyGlotVoice</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f0f8ff;
-            padding-top: 70px; /* Отступ сверху для фиксированной навигационной панели */
+            padding-top: 70px;
         }
         .content-container {
             padding: 20px;
@@ -90,7 +87,6 @@
         .btn-delete:hover {
             background-color: #c82333;
         }
-        /* Стили для боковой панели */
         .sidenav {
             height: 100%;
             width: 0;
@@ -130,7 +126,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .bar {
             width: 10px;
             height: 100%;
@@ -139,27 +134,21 @@
             margin: 0 2px;
             animation: sound 0.5s infinite;
         }
-
         .bar:nth-child(1) {
             animation-delay: -0.4s;
         }
-
         .bar:nth-child(2) {
             animation-delay: -0.3s;
         }
-
         .bar:nth-child(3) {
             animation-delay: -0.2s;
         }
-
         .bar:nth-child(4) {
             animation-delay: -0.1s;
         }
-
         .bar:nth-child(5) {
             animation-delay: 0s;
         }
-
         @keyframes sound {
             0% {
                 height: 20%;
@@ -171,7 +160,6 @@
                 height: 20%;
             }
         }
-
         @media (max-width: 768px) {
             .message-item {
                 flex-direction: column;
@@ -208,35 +196,28 @@
     </button>
 </nav>
 
-<!-- Боковая панель -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="{{ url_for('read_record') }}"><i class="fas fa-microphone"></i> Запись</a>
-    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language"></i> Перевод</a>
-    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle"></i> О нас</a>
-    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user"></i> Профиль</a>
+    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language'></i> Перевод</a>
+    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle'></i> О нас</a>
+    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user'></i> Профиль</a>
     <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt'></i> Выйти</a>
 </div>
 
 <div class="content-container">
     <div class="profile-container">
-        <h2 class="text-center">Запись сообщения</h2>
-        <form>
+        <h2 class="text-center">Загрузка аудио сообщения</h2>
+        <form id="uploadForm">
             <div class="form-group">
                 <label for="languageSelect">Выберите язык</label>
                 <select class="form-control" id="languageSelect">
                     <option value="ru-RU">Русский</option>
                     <option value="en-US">Английский</option>
                 </select>
-                <button type="button" class="btn btn-primary btn-custom" id="startRecording"><i class="fas fa-microphone"></i> Записать голос</button>
-                <button type="button" class="btn btn-secondary btn-custom" id="stopRecording" disabled><i class="fas fa-stop-circle"></i> Остановить запись</button>
-                <div class="audio-animation" id="audioAnimation">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
+                <label for="audioFile">Загрузить аудио файл</label>
+                <input type="file" class="form-control" id="audioFile" accept="audio/*">
+                <button type="submit" class="btn btn-primary btn-custom"><i class="fas fa-upload"></i> Загрузить аудио</button>
             </div>
         </form>
 
@@ -249,7 +230,7 @@
                         <div class="message-actions">
                             <audio controls><source src="{{ message.content }}" type="audio/mpeg">Ваш браузер не поддерживает элемент audio.</audio>
                             <button class="btn-download" onclick="location.href='{{ message.content }}'"><i class="fas fa-download"></i> Скачать</button>
-                            <button class="btn-delete delete-button" data-message-id="{{ message.id }}"><i class="fas fa-trash-alt"></i> Удалить</button>
+                            <button class="btn-delete delete-button" data-message-id="{{ message.id }}"><i class="fas fa-trash-alt'></i> Удалить</button>
                         </div>
                     </li>
                 {% endfor %}
@@ -260,7 +241,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="/static/js/recorder.js"></script>
 <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
@@ -280,57 +260,35 @@
         document.getElementById("mySidenav").style.width = "0";
     }
 
-    let audioContext;
-    let recorder;
-
-    document.getElementById('startRecording').addEventListener('click', async function() {
-        try {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                throw new Error('getUserMedia не поддерживается этим браузером.');
-            }
-
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const input = audioContext.createMediaStreamSource(stream);
-            recorder = new Recorder(input, { numChannels: 1 });
-            recorder.record();
-            document.getElementById('startRecording').disabled = true;
-            document.getElementById('stopRecording').disabled = false;
-            document.getElementById('audioAnimation').style.display = 'flex';
-        } catch (error) {
-            console.error('Error accessing media devices.', error);
-            alert('Error accessing media devices: ' + error.message);
+    document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const fileInput = document.getElementById('audioFile');
+        if (fileInput.files.length === 0) {
+            alert('Пожалуйста, выберите аудио файл.');
+            return;
         }
-    });
 
-    document.getElementById('stopRecording').addEventListener('click', function() {
-        recorder.stop();
-        document.getElementById('startRecording').disabled = false;
-        document.getElementById('stopRecording').disabled = true;
-        document.getElementById('audioAnimation').style.display = 'none';
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        formData.append('language', document.getElementById('languageSelect').value);
 
-        recorder.exportWAV(async function(blob) {
-            const formData = new FormData();
-            formData.append('file', blob, 'voice_message.wav');
-            formData.append('language', document.getElementById('languageSelect').value);
-
-            try {
-                const response = await fetch('/save_voice_message', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-                console.log('Voice message saved:', data);
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    window.location.reload();  // Reload the page to update the message list
-                }
-            } catch (error) {
-                console.error('Error saving voice message:', error);
-                alert('Error saving voice message');
+        try {
+            const response = await fetch('/save_voice_message', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            console.log('Voice message saved:', data);
+            if (data.error) {
+                alert(data.error);
+            } else {
+                window.location.reload();  // Reload the page to update the message list
             }
-        });
+        } catch (error) {
+            console.error('Error saving voice message:', error);
+            alert('Error saving voice message');
+        }
     });
 
     // Delete message functionality
