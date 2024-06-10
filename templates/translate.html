@@ -238,54 +238,50 @@
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
-   // Translate message functionality
-document.querySelectorAll('.translateForm').forEach(form => {
-    form.onsubmit = async (event) => {
-        event.preventDefault();
 
-        const formData = new FormData(form);
-        console.log('Отправляемые данные:', Array.from(formData.entries()));
+    // Translate message functionality
+    document.querySelectorAll('.translateForm').forEach(form => {
+        form.onsubmit = async (event) => {
+            event.preventDefault();
 
-        const response = await fetch('/translate_message', {
-            method: 'POST',
-            body: formData
-        });
+            const formData = new FormData(form);
+            console.log('Отправляемые данные:', Array.from(formData.entries()));
 
-        if (response.ok) {
-            const data = await response.json();
-            alert('Message translated successfully');
-            form.querySelector('.translated-text').innerText = `Перевод: ${data.translated_text}`;
-            const audioElement = document.createElement('audio');
-            audioElement.controls = true;
-            audioElement.src = `/${data.audio_file}`;
-            form.querySelector('.translated-audio').appendChild(audioElement);
-        } else {
-            alert('Failed to translate message');
-        }
-    };
-});
+            const response = await fetch('/translate_message', {
+                method: 'POST',
+                body: formData
+            });
 
-// Delete message functionality
-document.querySelectorAll('.delete-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const messageId = this.getAttribute('data-message-id');
-        fetch(`/delete_message/${messageId}`, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                this.closest('.message-item').remove();
+            if (response.ok) {
+                const data = await response.json();
+                alert('Message translated successfully');
+                window.location.reload();  // Reload the page to update the message list
             } else {
-                alert('Ошибка при удалении сообщения');
+                alert('Failed to translate message');
             }
-        }).catch(error => {
-            console.error('Error deleting message:', error);
-            alert('Error deleting message');
+        };
+    });
+
+    // Delete message functionality
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const messageId = this.getAttribute('data-message-id');
+            fetch(`/delete_message/${messageId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    this.closest('.message-item').remove();
+                } else {
+                    alert('Ошибка при удалении сообщения');
+                }
+            }).catch(error => {
+                console.error('Error deleting message:', error);
+                alert('Error deleting message');
+            });
         });
     });
-});
-
 </script>
 </body>
 </html>
