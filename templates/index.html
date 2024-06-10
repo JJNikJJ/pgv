@@ -2,60 +2,61 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PolyGlotVoice</title>
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#007bff">
-    <link href="/static/css/styles.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: white;
-            text-align: center;
-            padding-top: 50px;
-        }
-        .robot-img {
-            width: 300px;
-            margin-bottom: 20px;
-        }
-        .app-name {
-            font-size: 32px;
-            font-weight: bold;
-            color: #0056b3;
-            margin-bottom: 10px;
-        }
-        .tagline {
-            font-size: 18px;
-            color: #6c757d;
-            margin-bottom: 30px;
-        }
-        .btn-custom {
-            width: 200px;
-            margin: 10px auto;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/styles1.css">
+    <script defer src="/static/js/main.js"></script>
 </head>
 <body>
-<div class="container">
-    <img src="/static/img/robot.png" alt="Robot Image" class="robot-img">
-    <div class="app-name">PolyGlotVoice</div>
-    <div class="tagline">Нажмите, чтобы узнать, что я могу</div>
-    <a href="{{ url_for('read_login') }}" class="btn btn-primary btn-custom d-block">Вход</a>
-    <a href="{{ url_for('read_register') }}" class="btn btn-secondary btn-custom d-block mt-2">Зарегистрироваться</a>
-</div>
+    <header>
+        <div class="container">
+            <h1>PolyGlotVoice</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+ <section class="hero">
+    <div class="container">
+        <h2>Добро пожаловать в PolyGlotVoice</h2>
+        <p>PolyGlotVoice - это ваше универсальное решение для перевода аудио на различные языки.</p>
+        <div class="btn-group">
+            <a href="{{ url_for('read_login') }}"><button id="login-btn" class="btn">Вход</button></a>
+            <a href="{{ url_for('read_register') }}"><button id="register-btn" class="btn">Регистрация</button></a>
 
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(function(registration) {
-                console.log('Service Worker зарегистрирован с областью:', registration.scope);
-            })
-            .catch(function(error) {
-                console.log('Регистрация Service Worker завершилась ошибкой:', error);
-            });
-    }
-</script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works">
+    <div class="container">
+        <h2>Как это работает</h2>
+        <div class="steps">
+            <div class="step">
+                <img src="/static/img/record.jpg" alt="Загрузка аудио">
+                <h3>Загрузите или запишите аудио</h3>
+                <p>Загрузите ваш аудиофайл или запишите его прямо на нашей платформе.</p>
+            </div>
+            <div class="step">
+                <img src="/static/img/translate.png" alt="Перевод аудио">
+                <h3>Выберите язык</h3>
+                <p>Выберите язык, на который вы хотите перевести ваше аудио.</p>
+            </div>
+            <div class="step">
+                <img src="/static/img/synthesize.jpg" alt="Синтез аудио">
+                <h3>Синтез</h3>
+                <p>Преобразуйте переведенный текст обратно в аудио и скачайте его.</p>
+            </div>
+        </div>
+    </div>
+</section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PolyGlotVoice. Все права защищены.</p>
+        </div>
+    </footer>
 </body>
 </html>

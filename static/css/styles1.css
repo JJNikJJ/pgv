@@ -1,0 +1,335 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background: #007bff;
+    color: #ffffff;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: #e0e0e0 1px solid;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #007bff;
+}
+
+/* Hero section */
+.hero {
+    color: #333;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.hero h2 {
+    margin: 0 0 20px;
+    font-size: 2.5em;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-block;
+    color: #ffffff;
+    background: #007bff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+section {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step {
+    width: 80%;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.step img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.step h3 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.about p {
+    width: 60%;
+    margin: auto;
+}
+
+/* Модальные окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 5px;
+    position: relative;
+}
+
+.modal-content img.modal-img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+input.error {
+    border-color: red;
+}
+
+/* Dashboard specific styles */
+.dashboard .container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.dashboard h2 {
+    font-size: 2em;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.upload-section,
+.record-section,
+.messages-section {
+    margin-top: 30px;
+}
+
+.upload-section h3,
+.record-section h3,
+.messages-section h3 {
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.messages-list {
+    list-style: none;
+    padding: 0;
+}
+
+.messages-list li {
+    margin-bottom: 10px;
+}
+
+#recording-animation {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: red;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% {
+        opacity: 1;
+    }
+    25%, 75% {
+        opacity: 0;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #f1f1f1;
+    border-top: #e0e0e0 1px solid;
+}
+
+footer p {
+    margin: 0;
+    color: #666666;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .hero h2 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+
+    .steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        width: 90%;
+    }
+
+    .about p {
+        width: 90%;
+    }
+
+    .dashboard h2 {
+        font-size: 1.5em;
+    }
+
+    .upload-section h3,
+    .record-section h3,
+    .messages-section h3 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+    }
+
+    .hero h2 {
+        font-size: 1.5em;
+    }
+
+    .hero p {
+        font-size: 0.9em;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 16px;
+    }
+
+    .step img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    .step h3 {
+        font-size: 1.2em;
+    }
+
+    .dashboard h2 {
+        font-size: 1.2em;
+    }
+
+    .upload-section h3,
+    .record-section h3,
+    .messages-section h3 {
+        font-size: 1.2em;
+    }
+}

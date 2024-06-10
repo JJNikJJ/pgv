@@ -2,9 +2,11 @@ from fastapi import Request, HTTPException, Depends
 from typing import Optional
 from pydantic import BaseModel
 
+
 class UserSession(BaseModel):
     user_id: int
     nickname: str
+
 
 def get_session_data(request: Request) -> Optional[UserSession]:
     session_id = request.cookies.get("session_id")

@@ -7,6 +7,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#007bff">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f0f8ff;
@@ -26,7 +27,7 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #f8f9fa;
+            background-color: #343a40;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
@@ -35,12 +36,12 @@
             padding: 8px 8px 8px 32px;
             text-decoration: none;
             font-size: 25px;
-            color: #000;
+            color: #f8f9fa;
             display: block;
             transition: 0.3s;
         }
         .sidenav a:hover {
-            background-color: #ddd;
+            background-color: #575d63;
         }
         .sidenav .closebtn {
             position: absolute;
@@ -49,11 +50,54 @@
             font-size: 36px;
             margin-left: 50px;
         }
+        /* Стиль для карточек */
+        .card {
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        /* Стиль для секции "Как это работает" */
+        .how-it-works {
+            background-color: #fff;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .step {
+            max-width: 300px;
+            margin: 20px;
+            text-align: center;
+        }
+        .step img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .step h3 {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="#">PolyGlotVoice</a>
+    <a class="navbar-brand" href="#">
+        <img src="./../static/img/robot.png" alt="Logo" style="height: 30px; margin-right: 10px;">
+        PolyGlotVoice
+    </a>
     <button class="navbar-toggler" type="button" onclick="openNav()">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -62,31 +106,62 @@
 <!-- Боковая панель -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="{{ url_for('read_record') }}">Запись</a>
-    <a href="{{ url_for('read_translate') }}">Перевод</a>
-    <a href="{{ url_for('read_about') }}">О нас</a>
-    <a href="{{ url_for('read_profile') }}">Профиль</a>
-    <a href="{{ url_for('logout') }}">Выйти</a>
+    <a href="{{ url_for('read_record') }}"><i class="fas fa-microphone"></i> Запись</a>
+    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language"></i> Перевод</a>
+    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle"></i> О нас</a>
+    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user"></i> Профиль</a>
+    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Выйти</a>
 </div>
 
 <div class="content-container">
-    <h2>О нас</h2>
-    <p>
-        PolyGlotVoice - это современное приложение для синтеза речевых сигналов.
-        Мы предоставляем пользователям возможность записывать голосовые сообщения или вводить текст,
-        а затем переводить их на разные языки с последующим синтезом речи.
-    </p>
-    <p>
-        Наша цель - сделать межъязыковую коммуникацию проще и доступнее для всех.
-        Используйте PolyGlotVoice для общения с людьми по всему миру, независимо от языковых барьеров.
-    </p>
+    <div class="card">
+        <div class="card-body">
+            <h2>О нас</h2>
+            <p>
+                PolyGlotVoice - это современное приложение для синтеза речевых сигналов.
+                Мы предоставляем пользователям возможность записывать голосовые сообщения или вводить текст,
+                а затем переводить их на разные языки с последующим синтезом речи.
+            </p>
+            <p>
+                Наша цель - сделать межъязыковую коммуникацию проще и доступнее для всех.
+                Используйте PolyGlotVoice для общения с людьми по всему миру, независимо от языковых барьеров.
+            </p>
+        </div>
+    </div>
 </div>
+
+<section class="how-it-works">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h2>Как это работает</h2>
+                <div class="steps">
+                    <div class="step">
+                        <img src="/static/img/record.jpg" alt="Загрузка аудио" class="img-fluid">
+                        <h3>Загрузите или запишите аудио</h3>
+                        <p>Загрузите ваш аудиофайл или запишите его прямо на нашей платформе.</p>
+                    </div>
+                    <div class="step">
+                        <img src="/static/img/translate.png" alt="Перевод аудио" class="img-fluid">
+                        <h3>Выберите язык</h3>
+                        <p>Выберите язык, на который вы хотите перевести ваше аудио.</p>
+                    </div>
+                    <div class="step">
+                        <img src="/static/img/synthesize.jpg" alt="Синтез аудио" class="img-fluid">
+                        <h3>Синтез</h3>
+                        <p>Преобразуйте переведенный текст обратно в аудио и скачайте его.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-        if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
                 console.log('Service Worker зарегистрирован с областью:', registration.scope);

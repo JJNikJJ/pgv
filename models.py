@@ -21,5 +21,5 @@ class Message(Base):
     content = Column(String)
     translated = Column(Boolean, default=False)
     created_at = Column(DateTime, default=func.now())
-    language = Column(String)  # Новое поле для хранения языка
+    language = Column(String)
     owner = relationship("User", back_populates="messages")

@@ -1,5 +1,4 @@
 import os
-
 from fastapi import FastAPI, Request, Form, Depends, HTTPException, UploadFile, File
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -7,16 +6,17 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 import speech_recognition as sr
-from googletrans import Translator
+from translate import Translator  # Используем translate вместо googletrans
 from gtts import gTTS
 import logging
 import urllib.parse
 from pathlib import Path
 from uuid import uuid4
-
 from database import SessionLocal, engine, Base
 from models import User, Message
 from session import get_session_data, UserSession
+
+from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -59,10 +59,6 @@ def get_db():
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-
-@app.get("/favicon.ico", include_in_schema=False)
-async def favicon():
-    return FileResponse(os.path.join(app.root_path, "static", "favicon.ico"))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -137,12 +133,10 @@ async def handle_register(request: Request,
                           db: Session = Depends(get_db)):
     if password != confirmPassword:
         return templates.TemplateResponse("register.html", {"request": request, "error": "Пароли не совпадают"})
-
     user = db.query(User).filter(User.email == email).first()
     if user:
         return templates.TemplateResponse("register.html",
                                           {"request": request, "error": "Пользователь с таким email уже существует"})
-
     hashed_password = get_password_hash(password)
     new_user = User(
         nickname=nickname,
@@ -155,12 +149,10 @@ async def handle_register(request: Request,
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-
     response = RedirectResponse(url="/record", status_code=303)
     response.set_cookie(key="session_id", value=str(uuid4()))
     response.set_cookie(key="user_id", value=str(new_user.id))
     response.set_cookie(key="nickname", value=urllib.parse.quote(new_user.nickname))
-
     return response
 
 
@@ -213,31 +205,25 @@ async def save_voice_message(request: Request, file: UploadFile = File(...), lan
     try:
         logger.info(f"Received file: {file.filename}")
         logger.info(f"Received language: {language}")
-
         directory = Path("static/voice_messages")
         if not directory.exists():
             directory.mkdir(parents=True)
             logger.info(f"Created directory: {directory}")
-
         file_extension = file.filename.split(".")[-1]
         unique_filename = f"{uuid4()}.{file_extension}"
         file_location = directory / unique_filename
         logger.info(f"File will be saved to: {file_location}")
-
         with open(file_location, "wb+") as file_object:
             file_object.write(file.file.read())
             logger.info(f"File saved successfully at: {file_location}")
-
         new_message = Message(
             user_id=session_data.user_id,
             message_type="voice",
-            content=str(file_location).replace("\\", "/"),  # Преобразуем обратные слеши в прямые
-            language=language  # Сохраняем язык для последующего использования
-        )
+            content=str(file_location).replace("\\", "/"),
+            language=language)
         db.add(new_message)
         db.commit()
         logger.info(f"Voice message saved successfully for user_id: {session_data.user_id}")
-
         return {"message": "Voice message saved successfully"}
     except Exception as e:
         logger.error(f"Error saving voice message: {e}")
@@ -255,26 +241,20 @@ async def translate_message(request: Request, message_id: int = Form(...), targe
 
         # Определите исходный язык на основе вашего контекста или используйте язык, сохраненный с сообщением
         input_language = message.language
-
         # Путь к wav файлу
         wav_path = Path(message.content)
-
         # Распознавание речи
         recognizer = sr.Recognizer()
         with sr.AudioFile(str(wav_path)) as source:
             audio = recognizer.record(source)
         recognized_text = recognizer.recognize_google(audio, language=input_language)
-
         # Перевод текста
-        translator = Translator()
-        translated = translator.translate(recognized_text, dest=target_language)
-        translated_text = translated.text
-
+        translator = Translator(to_lang=target_language)
+        translated_text = translator.translate(recognized_text)
         # Синтез речи
         tts = gTTS(translated_text, lang=target_language)
         translated_audio_path = f"static/voice_messages/{uuid4()}.mp3"
         tts.save(translated_audio_path)
-
         # Сохранение переведенного сообщения в базу данных
         new_message = Message(
             user_id=session_data.user_id,
@@ -284,7 +264,6 @@ async def translate_message(request: Request, message_id: int = Form(...), targe
         )
         db.add(new_message)
         db.commit()
-
         return {"translated_text": translated_text, "audio_file": translated_audio_path}
     except Exception as e:
         logger.error(f"Error translating message: {e}")

@@ -7,17 +7,21 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#007bff">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f0f8ff;
             padding-top: 70px; /* Отступ сверху для фиксированной навигационной панели */
         }
-        .form-container {
+        .content-container {
+            padding: 20px;
+        }
+        .profile-container {
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
             margin-top: 20px;
             text-align: center;
@@ -40,21 +44,50 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: #f9f9f9;
+            transition: transform 0.3s;
+        }
+        .message-item:hover {
+            transform: translateY(-5px);
         }
         .message-item div {
             flex: 1;
         }
         .message-item .message-date {
             font-weight: bold;
+            margin-right: 20px;
         }
         .message-item .message-actions {
-            text-align: right;
-        }
-        .message-item .message-actions a {
-            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
         }
         .message-item .message-actions audio {
-            max-width: 200px;
+            flex-grow: 1;
+            margin-right: 10px;
+            max-width: 100%;
+        }
+        .btn-download, .btn-delete {
+            margin-left: 5px;
+            font-size: 0.875rem;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-download {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-download:hover {
+            background-color: #218838;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
         }
         /* Стили для боковой панели */
         .sidenav {
@@ -64,7 +97,7 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #f8f9fa;
+            background-color: #343a40;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
@@ -73,12 +106,12 @@
             padding: 8px 8px 8px 32px;
             text-decoration: none;
             font-size: 25px;
-            color: #000;
+            color: #f8f9fa;
             display: block;
             transition: 0.3s;
         }
         .sidenav a:hover {
-            background-color: #ddd;
+            background-color: #575d63;
         }
         .sidenav .closebtn {
             position: absolute;
@@ -89,15 +122,18 @@
         }
         .audio-animation {
             display: none;
-            width: 200px;
+            width: 100%;
             height: 50px;
             margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .bar {
             width: 10px;
             height: 100%;
-            background-color: #4CAF50;
+            background-color: #007bff;
             display: inline-block;
             margin: 0 2px;
             animation: sound 0.5s infinite;
@@ -125,20 +161,47 @@
 
         @keyframes sound {
             0% {
-                height: 30%;
+                height: 20%;
             }
             50% {
                 height: 100%;
             }
             100% {
-                height: 30%;
+                height: 20%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .message-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .message-item .message-date {
+                margin-bottom: 10px;
+            }
+            .message-item .message-actions {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .message-item .message-actions audio {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .btn-download, .btn-delete {
+                width: 100%;
+                margin-left: 0;
+                margin-bottom: 5px;
             }
         }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="#">PolyGlotVoice</a>
+    <a class="navbar-brand" href="#">
+        <img src="./../static/img/robot.png" alt="Logo" style="height: 30px; margin-right: 10px;">
+        PolyGlotVoice
+    </a>
     <button class="navbar-toggler" type="button" onclick="openNav()">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -147,28 +210,26 @@
 <!-- Боковая панель -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="{{ url_for('read_record') }}">Запись</a>
-    <a href="{{ url_for('read_translate') }}">Перевод</a>
-    <a href="{{ url_for('read_about') }}">О нас</a>
-    <a href="{{ url_for('read_profile') }}">Профиль</a>
-    <a href="{{ url_for('logout') }}">Выйти</a>
+    <a href="{{ url_for('read_record') }}"><i class="fas fa-microphone"></i> Запись</a>
+    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language"></i> Перевод</a>
+    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle"></i> О нас</a>
+    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user"></i> Профиль</a>
+    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Выйти</a>
 </div>
 
 <div class="content-container">
-    <div class="form-container">
-        <h2>Добро пожаловать, {{ user.nickname }}!</h2>
-        <h3>Запись сообщения</h3>
+    <div class="profile-container">
+        <h2 class="text-center">Запись сообщения</h2>
         <form>
             <div class="form-group">
+                <label for="languageSelect">Выберите язык</label>
                 <select class="form-control" id="languageSelect">
                     <option value="ru-RU">Русский</option>
                     <option value="en-US">Английский</option>
-                    <option value="de-DE">Немецкий</option>
-                    <option value="fr-FR">Французский</option>
                 </select>
-                <button type="button" class="btn btn-primary btn-custom" id="startRecording">Записать голос</button>
-                <button type="button" class="btn btn-secondary btn-custom" id="stopRecording" disabled>Остановить запись</button>
-                <div class="audio-animation" id="audioAnimation">
+                <button type="button" class="btn btn-primary btn-custom" id="startRecording"><i class="fas fa-microphone"></i> Записать голос</button>
+                <button type="button" class="btn btn-secondary btn-custom" id="stopRecording" disabled><i class="fas fa-stop-circle"></i> Остановить запись</button>
+                <div class="audio-animation" id="audioAnimation" style="display: none;">
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -180,14 +241,14 @@
 
         <div class="message-section">
             <h3>Записанные голосовые сообщения</h3>
-            <ul>
+            <ul class="list-unstyled">
                 {% for message in messages %}
                     <li class="message-item">
-                        <div class="message-date"><strong>Дата:</strong> {{ message.created_at }}</div>
+                        <div class="message-date"><strong>#{{ loop.index }}</strong></div>
                         <div class="message-actions">
                             <audio controls><source src="{{ message.content }}" type="audio/mpeg">Ваш браузер не поддерживает элемент audio.</audio>
-                            <a href="{{ message.content }}" download>Скачать</a>
-                            <button class="btn btn-danger btn-sm delete-button" data-message-id="{{ message.id }}">Удалить</button>
+                            <button class="btn-download" onclick="location.href='{{ message.content }}'"><i class="fas fa-download"></i> Скачать</button>
+                            <button class="btn-delete delete-button" data-message-id="{{ message.id }}"><i class="fas fa-trash-alt"></i> Удалить</button>
                         </div>
                     </li>
                 {% endfor %}
@@ -200,7 +261,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/static/js/recorder.js"></script>
 <script>
-        if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
                 console.log('Service Worker зарегистрирован с областью:', registration.scope);
@@ -230,7 +291,7 @@
                 recorder.record();
                 document.getElementById('startRecording').disabled = true;
                 document.getElementById('stopRecording').disabled = false;
-                document.getElementById('audioAnimation').style.display = 'block';
+                document.getElementById('audioAnimation').style.display = 'flex';
             }).catch(error => {
                 console.error('Error accessing media devices.', error);
                 alert('Error accessing media devices.');
