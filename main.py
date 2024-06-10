@@ -60,6 +60,10 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse("static/favicon.ico")
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
