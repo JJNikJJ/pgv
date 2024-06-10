@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Загрузка аудио сообщения - PolyGlotVoice</title>
+    <title>Загрузка сообщения - PolyGlotVoice</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007bff">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f0f8ff;
-            padding-top: 70px;
+            padding-top: 70px; /* Отступ сверху для фиксированной навигационной панели */
         }
         .content-container {
             padding: 20px;
@@ -87,6 +89,7 @@
         .btn-delete:hover {
             background-color: #c82333;
         }
+        /* Стили для боковой панели */
         .sidenav {
             height: 100%;
             width: 0;
@@ -126,6 +129,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .bar {
             width: 10px;
             height: 100%;
@@ -134,21 +138,27 @@
             margin: 0 2px;
             animation: sound 0.5s infinite;
         }
+
         .bar:nth-child(1) {
             animation-delay: -0.4s;
         }
+
         .bar:nth-child(2) {
             animation-delay: -0.3s;
         }
+
         .bar:nth-child(3) {
             animation-delay: -0.2s;
         }
+
         .bar:nth-child(4) {
             animation-delay: -0.1s;
         }
+
         .bar:nth-child(5) {
             animation-delay: 0s;
         }
+
         @keyframes sound {
             0% {
                 height: 20%;
@@ -160,6 +170,7 @@
                 height: 20%;
             }
         }
+
         @media (max-width: 768px) {
             .message-item {
                 flex-direction: column;
@@ -196,18 +207,19 @@
     </button>
 </nav>
 
+<!-- Боковая панель -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="{{ url_for('read_record') }}"><i class="fas fa-microphone"></i> Запись</a>
-    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language'></i> Перевод</a>
-    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle'></i> О нас</a>
-    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user'></i> Профиль</a>
-    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt'></i> Выйти</a>
+    <a href="{{ url_for('read_translate') }}"><i class="fas fa-language"></i> Перевод</a>
+    <a href="{{ url_for('read_about') }}"><i class="fas fa-info-circle"></i> О нас</a>
+    <a href="{{ url_for('read_profile') }}"><i class="fas fa-user"></i> Профиль</a>
+    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Выйти</a>
 </div>
 
 <div class="content-container">
     <div class="profile-container">
-        <h2 class="text-center">Загрузка аудио сообщения</h2>
+        <h2 class="text-center">Загрузка сообщения</h2>
         <form id="uploadForm">
             <div class="form-group">
                 <label for="languageSelect">Выберите язык</label>
@@ -230,7 +242,7 @@
                         <div class="message-actions">
                             <audio controls><source src="{{ message.content }}" type="audio/mpeg">Ваш браузер не поддерживает элемент audio.</audio>
                             <button class="btn-download" onclick="location.href='{{ message.content }}'"><i class="fas fa-download"></i> Скачать</button>
-                            <button class="btn-delete delete-button" data-message-id="{{ message.id }}"><i class="fas fa-trash-alt'></i> Удалить</button>
+                            <button class="btn-delete delete-button" data-message-id="{{ message.id }}"><i class="fas fa-trash-alt"></i> Удалить</button>
                         </div>
                     </li>
                 {% endfor %}
